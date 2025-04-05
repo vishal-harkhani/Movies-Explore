@@ -1,0 +1,36 @@
+CREATE DATABASE IF NOT EXISTS `Movies-Explore`;
+USE `Movies-Explore`;
+
+CREATE TABLE IF NOT EXISTS `users` (
+    `user_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `password` VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `movies` (
+    `movie_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `title` VARCHAR(255) NOT NULL,
+    `genre` VARCHAR(50) NOT NULL,
+    `day` VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS `booking_history` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,
+    `movie` VARCHAR(255) NOT NULL,
+    `seats` VARCHAR(255) NOT NULL,
+    `total_price` DECIMAL(10, 2) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS `payments` (
+    `payment_id` INT AUTO_INCREMENT PRIMARY KEY,
+    `movie` VARCHAR(255) NOT NULL,
+    `seats` VARCHAR(255) NOT NULL,
+    `total_price` DECIMAL(10, 2) NOT NULL,
+    `card_number` VARCHAR(16) NOT NULL,
+    `expiration_date` DATE NOT NULL,
+    `cvv` VARCHAR(3) NOT NULL,
+    `user_id` INT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
